@@ -3,6 +3,7 @@ const { Router } = require('express');
 const modelosController = require('../controllers/modelosController');
 const portoesController = require('../controllers/portoesController');
 const tipoUsuarioController = require('../controllers/tipoUsuarioController');
+const carrosController = require('../controllers/carrosController');
 
 const rotas = new Router();
 
@@ -38,5 +39,20 @@ rotas.route('/tiposUsuario')
 rotas.route('/tiposUsuario/:codigo')
      .get(tipoUsuarioController.getTipoUsuarioPorCodigo)
      .delete(tipoUsuarioController.deleteTipoUsuario)
+
+//CARROS
+
+rotas.route('/carros')
+     .get(carrosController.getCarros)
+     .post(carrosController.addCarro)
+     .put(carrosController.updateCarro)
+
+rotas.route('/carros/:placa')
+     .get(carrosController.getCarroPorCodigo)
+     .put(carrosController.deleteCarro)
+     
+
+rotas.route('/carroDelete')
+     .put(carrosController.deleteCarroBody)
 
 module.exports = rotas;
