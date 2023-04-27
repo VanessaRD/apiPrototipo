@@ -5,13 +5,13 @@ const getCarrosDB = async () => {
     try {
         const { rows } = await pool.query(`select s.placa as placa, s.ano as ano, 
         s.cor as cor, 
-        s.modelo as modelo, m.nome as nomeModelo, s.portao as portao, p.nome as nomePortao
+        s.modelo as modelo, m.nome as nomemodelo, s.portao as portao, p.nome as nomeportao
         from carros s
         join modelos m on s.modelo = m.codigo
         join portoes p on s.portao = p.codigo
         order by s.placa`);
         return rows.map((carro) => new Carro(carro.placa, carro.ano, carro.cor,
-            carro.modelo, carro.nomeModelo, carro.portao, carro.nomePortao));
+            carro.modelo, carro.nomemodelo, carro.portao, carro.nomeportao));
     } catch (err) {
         throw "Erro : " + err;
     }
@@ -91,7 +91,7 @@ const getCarroPorCodigoDB = async (placa) => {
         } else {
             const carro = results.rows[0];
             return new Carro(carro.placa, carro.ano, carro.cor,
-                carro.modelo, carro.portao, "");
+                carro.modelo, "", carro.portao, "");
         }
     } catch (err) {
         throw "Erro ao recuperar a carro: " + err;
