@@ -2,57 +2,48 @@ const { Router } = require('express');
 
 const modelosController = require('../controllers/modelosController');
 const portoesController = require('../controllers/portoesController');
-const tipoUsuarioController = require('../controllers/tipoUsuarioController');
 const carrosController = require('../controllers/carrosController');
 
+const { login, verificaJWT } = require('../controllers/segurancaController');
+
 const rotas = new Router();
+
+rotas.route('/login').post(login);
 
 //PORTÃO RESIDENCIAL
 
 rotas.route('/portoes')
-     .get(portoesController.getPortoes)
-     .post(portoesController.addPortao)
-     .put(portoesController.updatePortao)
+     .get(verificaJWT, portoesController.getPortoes)
+     .post(verificaJWT, portoesController.addPortao)
+     .put(verificaJWT, portoesController.updatePortao)
 
 rotas.route('/portoes/:codigo')
-     .get(portoesController.getPortaoPorCodigo)
-     .delete(portoesController.deletePortao)
+     .get(verificaJWT, portoesController.getPortaoPorCodigo)
+     .delete(verificaJWT, portoesController.deletePortao)
 
 //MODELO DE VEÍCULOS
 
 rotas.route('/modelos')
-     .get(modelosController.getModelos)
-     .post(modelosController.addModelo)
-     .put(modelosController.updateModelo)
+     .get(verificaJWT, modelosController.getModelos)
+     .post(verificaJWT, modelosController.addModelo)
+     .put(verificaJWT, modelosController.updateModelo)
 
 rotas.route('/modelos/:codigo')
-     .get(modelosController.getModeloPorCodigo)
-     .delete(modelosController.deleteModelo)
-
-//TIPOS DE USUÁRIO
-
-rotas.route('/tiposUsuario')
-     .get(tipoUsuarioController.getTipoUsuarios)
-     .post(tipoUsuarioController.addTipoUsuario)
-     .put(tipoUsuarioController.updateTipoUsuario)
-
-rotas.route('/tiposUsuario/:codigo')
-     .get(tipoUsuarioController.getTipoUsuarioPorCodigo)
-     .delete(tipoUsuarioController.deleteTipoUsuario)
+     .get(verificaJWT, modelosController.getModeloPorCodigo)
+     .delete(verificaJWT, modelosController.deleteModelo)
 
 //CARROS
 
 rotas.route('/carros')
-     .get(carrosController.getCarros)
-     .post(carrosController.addCarro)
-     .put(carrosController.updateCarro)
+     .get(verificaJWT, carrosController.getCarros)
+     .post(verificaJWT, carrosController.addCarro)
+     .put(verificaJWT, carrosController.updateCarro)
 
 rotas.route('/carros/:placa')
-     .get(carrosController.getCarroPorCodigo)
-     .put(carrosController.deleteCarro)
+     .get(verificaJWT, carrosController.getCarroPorCodigo)
+     .put(verificaJWT, carrosController.deleteCarro)
      
-
 rotas.route('/carroDelete')
-     .put(carrosController.deleteCarroBody)
+     .put(verificaJWT, carrosController.deleteCarroBody)
 
 module.exports = rotas;
