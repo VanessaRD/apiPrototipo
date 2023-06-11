@@ -53,7 +53,7 @@ const updateCarroDB = async (body) => {
 
 const deleteCarroDB = async (placa) => {
     try {
-        console.log("A: " + placa)
+        //console.log("A: " + placa)
         const results = await pool.query(`DELETE FROM carros WHERE placa = $1`,
             [placa]);
         if (results.rowCount == 0) {
